@@ -1,4 +1,4 @@
-const axios = require("axios");
+const axios = require("axios"); //We use axios so we can fetch in the back-end
 const mongoose = require("mongoose");
 require("dotenv").config();
 const Pokemon = require("./models/Pokemon");
@@ -19,7 +19,7 @@ async function processPokemon() {
   let url = "https://pokeapi.co/api/v2/pokemon";
   while (pokemonToProcess) {
     const { data } = await axios.get(url);
-    await Pokemon.insertMany(data.results);
+    await Pokemon.insertMany(data.results); //data.results are the pokemon
     if (!data.next) {
       pokemonToProcess = false;
     } else {
@@ -32,7 +32,7 @@ async function processPokemon() {
 async function main() {
   await Pokemon.deleteMany({}); //start with a clean collection
   await processPokemon();
-  mongoose.connection.close();
+  mongoose.connection.close(); //This ends the script
 }
 
 main();
